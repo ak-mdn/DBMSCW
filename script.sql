@@ -226,3 +226,38 @@ LEFT JOIN District D ON C.countyId = D.countyId
 LEFT JOIN Person P ON D.districtId = P.districtId
 LEFT JOIN Appointment A ON P.Id = A.personId
 GROUP BY C.countyName;
+
+-- list the average waiting time (in months) for each type and the number of appointments associated with that type.
+
+SELECT WL.type, ROUND(AVG(MONTHS_BETWEEN(SYSDATE, WL.dateAdded)), 1) AS avg_months, COUNT(A.personId) AS appointmentCount
+FROM WaitingList WL
+LEFT JOIN Appointment A ON WL.waitingListId = A.waitingListId 
+GROUP BY WL.type;
+
+-- advanced
+-- Show persons who have more appointments than the average number of appointments per person
+SELECT P.firstName, P.lastName, COUNT(A.appointmentId) AS numberOfAppointments
+FROM Person P
+JOIN Appointment A ON P.Id = A.personId
+GROUP BY P.Id
+HAVING COUNT(A.appointmentId) > (
+SELECT AVG(appointmentCount) 
+FROM (SELECT COUNT(appointmentId) AS appointmentCount 
+FROM Appointment 
+GROUP BY personId) AS counts
+);
+
+-- Find professionals who are assigned to more than one appointment
+SELECT Pr.professionalId, Pr.specialisation, COUNT(AP.appointmentId) AS numberOfAssignments
+FROM Professional Pr
+JOIN AssignedProfessionals AP ON Pr.professionalId = AP.professionalId
+GROUP BY Pr.professionalId, Pr.specialisation
+HAVING COUNT(AP.appointmentId) > 1;
+
+-- List ministers who made statements in the last year
+SELECT M.ministerId, COUNT(S.statementId) AS totalStatements
+FROM Minister M
+JOIN Statement S ON M.ministerId = S.ministerId
+WHERE S.dateCreated >= ADD_MONTHS(SYSDATE, -12)
+GROUP BY M.ministerId
+HAVING COUNT(S.statementId) > 0;
