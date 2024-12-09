@@ -1,3 +1,4 @@
+-- Oracle Live SQL script
 CREATE TABLE Country (
     countryId INT PRIMARY KEY,
     countryName VARCHAR2(20) NOT NULL
@@ -31,8 +32,10 @@ CREATE TABLE Person (
 
 CREATE TABLE Minister (
     ministerId INT PRIMARY KEY,
+    Id INT UNIQUE,
     countryId INT NOT NULL,
-    FOREIGN KEY (countryId) REFERENCES Country(countryId)
+    FOREIGN KEY (countryId) REFERENCES Country(countryId),
+    FOREIGN KEY (Id) REFERENCES Person(Id)
 );
 
 CREATE TABLE Statement (
@@ -65,7 +68,9 @@ CREATE TABLE Appointment (
 
 CREATE TABLE Professional (
     professionalId INT PRIMARY KEY,
-    specialisation VARCHAR2(255) NOT NULL
+    Id INT UNIQUE,
+    specialisation VARCHAR2(255) NOT NULL,
+    FOREIGN KEY (Id) REFERENCES Person(Id)
 );
 
 CREATE TABLE AssignedProfessionals (
@@ -115,11 +120,21 @@ INSERT INTO Person VALUES (8, 'Henry', 'Adams', TO_DATE('1983-03-22', 'YYYY-MM-D
 INSERT INTO Person VALUES (9, 'Ivy', 'Clark', TO_DATE('1987-06-12', 'YYYY-MM-DD'), 'Female', 'Employed', 'Therapist', 9);
 INSERT INTO Person VALUES (10, 'Jack', 'Wilson', TO_DATE('1991-12-01', 'YYYY-MM-DD'), 'Male', 'Self-employed', 'Consultant', 10);
 
+INSERT INTO Person VALUES (11, 'Olivia', 'King', TO_DATE('1984-01-10', 'YYYY-MM-DD'), 'Female', 'Employed', 'Pediatrician', 1);
+INSERT INTO Person VALUES (12, 'Lucas', 'Martin', TO_DATE('1990-11-11', 'YYYY-MM-DD'), 'Male', 'Self-employed', 'Oncologist', 2);
+INSERT INTO Person VALUES (13, 'Sophia', 'Lee', TO_DATE('1987-08-23', 'YYYY-MM-DD'), 'Female', 'Unemployed', 'Radiologist', 3);
+INSERT INTO Person VALUES (14, 'James', 'Harris', TO_DATE('1995-04-07', 'YYYY-MM-DD'), 'Male', 'Employed', 'Orthopedic Surgeon', 4);
+INSERT INTO Person VALUES (15, 'Isabella', 'Young', TO_DATE('1992-02-01', 'YYYY-MM-DD'), 'Female', 'Self-employed', 'Neurologist', 5);
+INSERT INTO Person VALUES (16, 'Mason', 'Scott', TO_DATE('1981-07-16', 'YYYY-MM-DD'), 'Male', 'Employed', 'Psychiatrist', 6);
+INSERT INTO Person VALUES (17, 'Lily', 'Green', TO_DATE('1993-03-29', 'YYYY-MM-DD'), 'Female', 'Unemployed', 'General Practitioner', 7);
+INSERT INTO Person VALUES (18, 'William', 'Adams', TO_DATE('1990-09-18', 'YYYY-MM-DD'), 'Male', 'Self-employed', 'Surgeon', 8);
+INSERT INTO Person VALUES (19, 'Ella', 'Mitchell', TO_DATE('1996-04-09', 'YYYY-MM-DD'), 'Female', 'Employed', 'Dentist', 9);
+INSERT INTO Person VALUES (20, 'Benjamin', 'Moore', TO_DATE('1988-05-14', 'YYYY-MM-DD'), 'Male', 'Employed', 'Cardiologist', 10);
 
-INSERT INTO Minister VALUES (1, 1);
-INSERT INTO Minister VALUES (2, 2);
-INSERT INTO Minister VALUES (3, 3);
-INSERT INTO Minister VALUES (4, 4);
+INSERT INTO Minister VALUES (1, 1, 1);
+INSERT INTO Minister VALUES (2, 2, 2);
+INSERT INTO Minister VALUES (3, 3, 3);
+INSERT INTO Minister VALUES (4, 4, 4);
 
 
 INSERT INTO Statement VALUES (1, 1, 'NHS reforms are critical', TO_TIMESTAMP('2024-01-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'));
@@ -164,19 +179,26 @@ INSERT INTO Appointment VALUES (11, 1, 1, TO_TIMESTAMP('2024-04-10 12:00:00', 'Y
 INSERT INTO Appointment VALUES (12, 2, 2, TO_TIMESTAMP('2024-04-15 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Skin Consultation', 'DermCare Clinic');
 INSERT INTO Appointment VALUES (13, 3, 3, TO_TIMESTAMP('2024-04-20 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Physiotherapy', 'Sports Rehab Center');
 
-INSERT INTO Professional VALUES (1, 'General Practitioner');
-INSERT INTO Professional VALUES (2, 'Surgeon');
-INSERT INTO Professional VALUES (3, 'Dentist');
-INSERT INTO Professional VALUES (4, 'Cardiologist');
-INSERT INTO Professional VALUES (5, 'Dermatologist');
-INSERT INTO Professional VALUES (6, 'Physiotherapist');
-INSERT INTO Professional VALUES (7, 'Orthopedic Surgeon');
-INSERT INTO Professional VALUES (8, 'Psychiatrist');
-INSERT INTO Professional VALUES (9, 'Radiologist');
-INSERT INTO Professional VALUES (10, 'Ophthalmologist');
-INSERT INTO Professional VALUES (11, 'Pediatrician');
-INSERT INTO Professional VALUES (12, 'Oncologist');
-INSERT INTO Professional VALUES (13, 'Neurologist');
+INSERT INTO Professional VALUES (1, 1, 'General Practitioner');
+INSERT INTO Professional VALUES (2, 2, 'Surgeon');
+INSERT INTO Professional VALUES (3, 3, 'Nurse');
+INSERT INTO Professional VALUES (4, 4, 'Dentist');
+INSERT INTO Professional VALUES (5, 5, 'Researcher');
+INSERT INTO Professional VALUES (6, 6, 'Surgeon');
+INSERT INTO Professional VALUES (7, 7, 'Chef');
+INSERT INTO Professional VALUES (8, 8, 'Engineer');
+INSERT INTO Professional VALUES (9, 9, 'Therapist');
+INSERT INTO Professional VALUES (10, 10, 'Consultant');
+INSERT INTO Professional VALUES (11, 11, 'Pediatrician');
+INSERT INTO Professional VALUES (12, 12, 'Oncologist');
+INSERT INTO Professional VALUES (13, 13, 'Radiologist');
+INSERT INTO Professional VALUES (14, 14, 'Orthopedic Surgeon');
+INSERT INTO Professional VALUES (15, 15, 'Neurologist');
+INSERT INTO Professional VALUES (16, 16, 'Psychiatrist');
+INSERT INTO Professional VALUES (17, 17, 'General Practitioner');
+INSERT INTO Professional VALUES (18, 18, 'Surgeon');
+INSERT INTO Professional VALUES (19, 19, 'Dentist');
+INSERT INTO Professional VALUES (20, 20, 'Cardiologist');
 
 
 INSERT INTO AssignedProfessionals VALUES (1, 1);
@@ -193,7 +215,7 @@ INSERT INTO AssignedProfessionals VALUES (11, 3);
 INSERT INTO AssignedProfessionals VALUES (12, 5);
 INSERT INTO AssignedProfessionals VALUES (13, 6);
 
-
+--basic
 -- Find all appointments with a waiting time longer than 60 minutes
 
 SELECT A.appointmentId, A.type, W.estimatedWait
@@ -235,16 +257,19 @@ LEFT JOIN Appointment A ON WL.waitingListId = A.waitingListId
 GROUP BY WL.type;
 
 -- advanced
--- Show persons who have more appointments than the average number of appointments per person
-SELECT P.firstName, P.lastName, COUNT(A.appointmentId) AS numberOfAppointments
-FROM Person P
-JOIN Appointment A ON P.Id = A.personId
-GROUP BY P.Id
-HAVING COUNT(A.appointmentId) > (
-SELECT AVG(appointmentCount) 
-FROM (SELECT COUNT(appointmentId) AS appointmentCount 
-FROM Appointment 
-GROUP BY personId) AS counts
+-- find the ministers who have made more statements than the average number of statements made by all ministers
+SELECT M.ministerId, P.firstName, P.lastName, COUNT(S.statementId) AS numberOfStatements
+FROM Minister M
+JOIN Person P ON M.Id = P.Id
+JOIN Statement S ON M.ministerId = S.ministerId
+GROUP BY M.ministerId, P.firstName, P.lastName
+HAVING COUNT(S.statementId) > (
+    SELECT AVG(statementCount)
+    FROM (
+        SELECT COUNT(statementId) AS statementCount
+        FROM Statement
+        GROUP BY ministerId
+    )
 );
 
 -- Find professionals who are assigned to more than one appointment
