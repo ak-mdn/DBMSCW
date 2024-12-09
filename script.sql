@@ -132,15 +132,15 @@ INSERT INTO Person VALUES (19, 'Ella', 'Mitchell', TO_DATE('1996-04-09', 'YYYY-M
 INSERT INTO Person VALUES (20, 'Benjamin', 'Moore', TO_DATE('1988-05-14', 'YYYY-MM-DD'), 'Male', 'Employed', 'Cardiologist', 10);
 
 INSERT INTO Person VALUES (21, 'Aiden', 'Baker', TO_DATE('1994-12-15', 'YYYY-MM-DD'), 'Male', 'Employed', 'Physiotherapist', 1);
-INSERT INTO Person VALUES (22, 'Chloe', 'Garcia', TO_DATE('1988-02-04', 'YYYY-MM-DD'), 'Female', 'Self-employed', 'Dermatologist', 2);
+INSERT INTO Person VALUES (22, 'Chloe', 'Garcia', TO_DATE('1988-02-04', 'YYYY-MM-DD'), 'Female', 'Self-employed', 'Dermatologist', 4);
 INSERT INTO Person VALUES (23, 'Ethan', 'Miller', TO_DATE('1992-06-21', 'YYYY-MM-DD'), 'Male', 'Employed', 'Therapist', 3);
 INSERT INTO Person VALUES (24, 'Amelia', 'Carter', TO_DATE('1985-11-30', 'YYYY-MM-DD'), 'Female', 'Self-employed', 'Ophthalmologist', 4);
 INSERT INTO Person VALUES (25, 'Liam', 'Davis', TO_DATE('1991-03-08', 'YYYY-MM-DD'), 'Male', 'Employed', 'Cardiologist', 5);
-INSERT INTO Person VALUES (26, 'Zoe', 'Parker', TO_DATE('1983-10-25', 'YYYY-MM-DD'), 'Female', 'Unemployed', 'Pediatrician', 6);
+INSERT INTO Person VALUES (26, 'Zoe', 'Parker', TO_DATE('1983-10-25', 'YYYY-MM-DD'), 'Female', 'Unemployed', 'Pediatrician', 1);
 INSERT INTO Person VALUES (27, 'Oliver', 'Nelson', TO_DATE('1986-07-30', 'YYYY-MM-DD'), 'Male', 'Employed', 'Surgeon', 7);
-INSERT INTO Person VALUES (28, 'Harper', 'Robinson', TO_DATE('1990-12-20', 'YYYY-MM-DD'), 'Female', 'Employed', 'General Practitioner', 8);
+INSERT INTO Person VALUES (28, 'Harper', 'Robinson', TO_DATE('1990-12-20', 'YYYY-MM-DD'), 'Female', 'Employed', 'General Practitioner', 9);
 INSERT INTO Person VALUES (29, 'Mason', 'Walker', TO_DATE('1984-09-12', 'YYYY-MM-DD'), 'Male', 'Self-employed', 'Engineer', 9);
-INSERT INTO Person VALUES (30, 'Ella', 'Lopez', TO_DATE('1997-05-13', 'YYYY-MM-DD'), 'Female', 'Unemployed', 'Artist', 10);
+INSERT INTO Person VALUES (30, 'Ella', 'Lopez', TO_DATE('1997-05-13', 'YYYY-MM-DD'), 'Female', 'Unemployed', 'Artist', 9);
 
 
 INSERT INTO Minister VALUES (1, 1, 1);
