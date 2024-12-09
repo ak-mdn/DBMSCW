@@ -152,7 +152,7 @@ INSERT INTO Person VALUES (32, 'John', 'Swinney', TO_DATE('1964-04-13', 'YYYY-MM
 INSERT INTO Person VALUES (33, 'Eluned', 'Morgan', TO_DATE('1967-02-16', 'YYYY-MM-DD'), 'Female', 'Employed', 'Politician', 3);
 
 -- Insert First Minister of Northern Ireland
-INSERT INTO Person VALUES (34, 'Michelle', 'O\'Neill', TO_DATE('1977-01-10', 'YYYY-MM-DD'), 'Female', 'Employed', 'Politician', 5);
+INSERT INTO Person VALUES (34, 'Michelle', 'ONeill', TO_DATE('1977-01-10', 'YYYY-MM-DD'), 'Female', 'Employed', 'Politician', 5);
 
 
 INSERT INTO Minister VALUES (1, 31, 1);
@@ -296,17 +296,23 @@ HAVING COUNT(S.statementId) > (
     )
 );
 
--- Find professionals who are assigned to more than one appointment
-SELECT Pr.professionalId, Pr.specialisation, COUNT(AP.appointmentId) AS numberOfAssignments
+-- Find professionals who are assigned to more than one appointment, including their names
+SELECT Pr.professionalId, P.firstName, P.lastName, Pr.specialisation, 
+COUNT(AP.appointmentId) AS numberOfAssignments
 FROM Professional Pr
+JOIN Person P ON Pr.Id = P.Id
 JOIN AssignedProfessionals AP ON Pr.professionalId = AP.professionalId
-GROUP BY Pr.professionalId, Pr.specialisation
+GROUP BY Pr.professionalId, P.firstName, P.lastName, Pr.specialisation
 HAVING COUNT(AP.appointmentId) > 1;
 
--- List ministers who made statements in the last year
-SELECT M.ministerId, COUNT(S.statementId) AS totalStatements
+
+-- List ministers who made statements in the last year, including their full names
+SELECT M.ministerId, P.firstName, P.lastName, 
+COUNT(S.statementId) AS totalStatements
 FROM Minister M
+JOIN Person P ON M.Id = P.Id
 JOIN Statement S ON M.ministerId = S.ministerId
 WHERE S.dateCreated >= ADD_MONTHS(SYSDATE, -12)
-GROUP BY M.ministerId
+GROUP BY M.ministerId, P.firstName, P.lastName
 HAVING COUNT(S.statementId) > 0;
+
